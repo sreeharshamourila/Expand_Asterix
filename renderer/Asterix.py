@@ -10,7 +10,10 @@ import os
 import os.path as osp
 import numpy as np
 from PIL import Image
-
+import glob
+from random import randint
+import cv2
+#filelist = glob.glob('BengaliBMPConvert/*.bmp')
 class AsterixRenderer(object):
   """
   Domain specific renderer definition
@@ -25,17 +28,16 @@ class AsterixRenderer(object):
     asset_dir = self.config['attributes']['asset_dir']
     self.data = {}
 
-    with open(osp.join(asset_dir,'labels'), 'rb') as flbl:
-      _, size = struct.unpack('>II', flbl.read(8))
-      lbls = np.fromfile(flbl, dtype=np.int8)
+    #with open(osp.join(asset_dir,'labels'), 'rb') as flbl:
+    #  _, size = struct.unpack('>II', flbl.read(8))
+    #  lbls = np.fromfile(flbl, dtype=np.int8)
 
-    with open(osp.join(asset_dir,'images'), 'rb') as fimg:
-      _, size, rows, cols = struct.unpack('>IIII', fimg.read(16))
-      imgs = np.fromfile(fimg, dtype=np.uint8).reshape(len(lbls), rows, cols)
+    #with open(osp.join(asset_dir,'Images'), 'rb') as fimg:
+    Background=asset_dir+"Train/Images/0.jpg"
+    #filelist = glob.glob(Image_dir)
+    #print(filelist)
+    imgs = np.array([np.array(Image.open(Background))*100])
 
-    for lbl in np.unique(lbls):
-      idxs = (lbls == lbl)
-      self.data[lbl] = imgs[idxs]
 
     return
 
@@ -59,67 +61,45 @@ class AsterixRenderer(object):
     """
     # vars
     labels = []
-    size = self.config['attributes']['size']
-    bg_idx = list(filter(
-      lambda i: graph.node[i]['cls'] ==  'Background',
-      range(len(graph.nodes))))
-    bg = graph.node[bg_idx[0]]['attr']['texture']
-    out_img = np.zeros(size, dtype=np.uint8)
+    print(graph.nodes)
+    asset_dir = self.config['attributes']['asset_dir']
+    background=asset_dir+"Train/Images/0.jpg"
+    agent=asset_dir+"Samples/agent.jpg"
+    demon=asset_dir+"Samples/demon.jpg"
+    target=asset_dir+"Samples/target.jpg"
+    im=cv2.imread(background)
+    #img=np.array(Image.open(background))
+    for i in range(1,len(graph.nodes),2):
+        print(graph.nodes[i])
+        print(graph.nodes[i+1])
+        lane=graph.nodes[i]['attr']['loc_y']
+        char=graph.nodes[i+1]['cls']
+        print(char)
+        ch=0
+        yx=[0]*4
+        x=randint(3,153)
+        if(char=='hero'):
+            yx=[lane-5,lane+5,x,x+7]
+            ch=cv2.imread(agent)
+        elif(char=='Demon'):
+            yx=[lane-5,lane+5,x,x+6]
+            ch=cv2.imread(demon)
+        elif(char=='target'):
+            yx=[lane-4,lane+5,x,x+6]
+            ch=cv2.imread(target)
+            print(ch.shape)
+        #print(ag.shape)
+        #print(dem.shape)
+        #print(tar.shape)
+        print(ch.shape)
+        print(yx)
+        im[yx[0]:yx[1],yx[2]:yx[3]]=ch
+    #cv2.imshow("im",im)
+    #cv2.waitKey(0)
+    
 
-    # HACK: Should be a better way to find if a node
-    # is a digit
-    digit_idxs = list(filter(
-      lambda i: graph.node[i]['cls'] in range(10),
-      range(len(graph.nodes))))
-
-    # Add bg
-    out_img[out_img == 0] = max(bg, 0)
-
-    # Add digits
-    for i in digit_idxs:
-      x = int(graph.node[i]['attr']['loc_x'])
-      y = int(graph.node[i]['attr']['loc_y'])
-      digit_cls = graph.node[i]['cls']
-      texture = graph.node[i]['attr']['texture']
-
-      # rotate the object
-      img = Image.fromarray(texture)
-      yaw = graph.node[i]['attr']['yaw'] % 360
-      rimg = img.rotate(yaw, expand=True)
-
-      img = np.array(rimg)
-      width, height = img.shape[1], img.shape[0]
-      xmin, ymin = x - width // 2, y - height // 2
-      xmax, ymax = xmin + width, ymin + height
-
-      # out of bounds
-      if xmax <= 0 or xmin >= size[1] or ymax <= 0 or ymin >= size[0]:
-          labels.append([-1, -1, -1, -1, -1])
-      else:
-          if (xmin < 0):
-              img = img[:, -xmin:]
-              xmin = 0
-          if (ymin < 0):
-              img = img[-ymin:, :]
-              ymin = 0
-
-          if (xmax > size[1]):
-              img = img[:, 0:size[1] - xmin]
-              xmax = size[1]
-          if (ymax > size[0]):
-              img = img[0:size[0] - ymin, :]
-              ymax = size[0]
-
-          labels.append({
-              'obj_class': digit_cls,
-              'yaw': yaw,
-              'bbox': [xmin, ymin, xmax, ymax]
-          })
-
-          out_img[ymin:ymax, xmin:xmax] = img | out_img[ymin:ymax, xmin:xmax]
-
-    return out_img, labels
+    return im, labels
 
 if __name__ == '__main__':
-  config = json.load(open('data/generator/config/mnist.json', 'r'))
+  config = json.load(open('data/generator/config/Asterix.json', 'r'))
   re = Renderer(config)
