@@ -1,0 +1,196 @@
+{
+  "class": ["Deterministic", "Image"],
+  "attributes": {
+    "features": ["class","loc_x", "loc_y"],
+    "dataset": "Asterix",
+    "immutable": true,
+    "directed" : true,
+    "num_samples":100,
+    "asset_dir"  : "data/assets/Asterix/",
+    "output_dir" : "data/datagen/Astrix/initial_rot",
+    "loc_x":  ["Deterministic", 0, 0, 32],
+    "loc_y":  ["Deterministic", 0, 0, 32]
+  },
+  "num_child" : ["Deterministic", 8],
+  "child": [
+    {
+      "class": ["Deterministic", "lane0"],
+      "attributes": {
+        "immutable": true,
+        "loc_y":  ["Deterministic",31, 0, 32]
+      },
+      "num_child" : ["Deterministic", 1],
+      "child": [
+	      {
+          "class":["Deterministic", "character"],
+          "attributes": {
+            "immutable": false,
+	    "features": ["loc_x","char"],
+            "loc_x": ["Random" ,3, 153],
+	    "char": ["Random","Demon","hero","target","empty"]
+          },
+          "num_child" : ["Deterministic", 0],
+          "child": []
+        }
+
+      ]
+    },
+    {
+      "class": ["Deterministic", "lane1"],
+      "attributes": {
+        "immutable": true,
+        "loc_y":  ["Deterministic",47, 0, 32]
+      },
+      "num_child" : ["Deterministic", 1],
+      "child": [
+	      {
+          "class":["Deterministic", "character"],
+          "attributes": {
+            "immutable": false,
+	    "features": ["loc_x","char"],
+            "loc_x": ["Random" ,3, 153],
+	    "char": ["Random","Demon","hero","target","empty"]
+          },
+          "num_child" : ["Deterministic", 0],
+          "child": []
+        }
+
+      ]
+    },
+    {
+      "class": ["Deterministic", "lane2"],
+      "attributes": {
+        "immutable": true,
+        "loc_y":  ["Deterministic", 63, 0, 32]
+      },
+      "num_child" : ["Deterministic", 1],
+      "child": [
+	      {
+          "class":["Deterministic", "character"],
+          "attributes": {
+            "immutable": false,
+	    "features": ["loc_x","char"],
+            "loc_x": ["Random" ,3, 153],
+	    "char": ["Random","Demon","hero","target","empty"]
+          },
+          "num_child" : ["Deterministic", 0],
+          "child": []
+        }
+
+      ]
+    },
+    {
+      "class": ["Deterministic", "lane3"],
+      "attributes": {
+        "immutable": true,
+        "loc_y":  ["Deterministic",79, 0, 32]
+      },
+      "num_child" : ["Deterministic", 1],
+      "child": [
+	      {
+          "class":["Deterministic", "character"],
+          "attributes": {
+            "immutable": false,
+	    "features": ["loc_x","char"],
+            "loc_x": ["Random" ,3, 153],
+	    "char": ["Random","Demon","hero","target","empty"] 
+          },
+          "num_child" : ["Deterministic", 0],
+          "child": []
+        }
+
+      ]
+    },
+    {
+      "class": ["Deterministic", "lane4"],
+      "attributes": {
+        "immutable": true,
+        "loc_y":  ["Deterministic", 95, 0, 32]
+      },
+      "num_child" : ["Deterministic", 1],
+      "child": [
+	      {
+          "class":["Deterministic", "character"],
+          "attributes": {
+            "immutable": false,
+            "features": ["loc_x","char"],
+            "loc_x": ["Random" ,3, 153],
+	    "char": ["Random","Demon","hero","target","empty"]
+          },
+          "num_child" : ["Deterministic", 0],
+          "child": []
+        }
+
+      ]
+    },
+    {
+      "class": ["Deterministic", "lane5"],
+      "attributes": {
+        "immutable": true,
+        "loc_y":  ["Deterministic", 111, 0, 32]
+      },
+      "num_child" : ["Deterministic", 1],
+      "child": [
+	      {
+          "class":["Deterministic", "character"],
+          "attributes": {
+            "immutable": false,
+            "features": ["loc_x","char"],
+            "loc_x": ["Random" ,3, 153],
+	    "char": ["Random","Demon","hero","target","empty"]
+
+          },
+          "num_child" : ["Deterministic", 0],
+          "child": []
+        }
+
+      ]
+    },
+    {
+      "class": ["Deterministic", "lane6"],
+      "attributes": {
+        "immutable": true,
+        "loc_y":  ["Deterministic", 127, 0, 32]
+      },
+      "num_child" : ["Deterministic", 1],
+      "child": [
+	      {
+          "class":["Deterministic", "character"],
+          "attributes": {
+            "immutable": false,
+            "features": ["loc_x","char"],
+            "loc_x": ["Random" ,3, 153],
+	    "char": ["Random","Demon","hero","target","empty"]
+
+          },
+          "num_child" : ["Deterministic", 0],
+          "child": []
+        }
+
+      ]
+    },
+    {
+      "class": ["Deterministic", "lane7"],
+      "attributes": {
+        "immutable": true,
+        "loc_y":  ["Deterministic", 143, 0, 32]
+      },
+      "num_child" : ["Deterministic", 1],
+      "child": [
+	      {
+          "class":["Deterministic", "character"],
+          "attributes": {
+            "immutable": false,
+            "features": ["loc_x","char"],
+            "loc_x": ["Random" ,3, 153],
+	    "char": ["Random","Demon","hero","target","empty"]
+
+          },
+          "num_child" : ["Deterministic", 0],
+          "child": []
+        }
+
+      ]
+    }
+   ]
+}
