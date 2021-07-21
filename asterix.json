@@ -2,12 +2,12 @@
   "class": ["Deterministic", "Image"],
   "attributes": {
     "features": ["class","loc_x", "loc_y"],
-    "dataset": "Asterix",
+    "dataset": "asterix",
     "immutable": true,
     "directed" : true,
     "num_samples":100,
-    "asset_dir"  : "data/assets/Asterix/",
-    "output_dir" : "data/datagen/Astrix/initial_rot",
+    "asset_dir"  : "data/assets/asterix/",
+    "output_dir" : "data/datagen/astrix/initial_rot",
     "loc_x":  ["Deterministic", 0, 0, 32],
     "loc_y":  ["Deterministic", 0, 0, 32]
   },
